@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Euclid GIF Viewer</title>
+
+<style>
+    body {
+        background: black;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+    }
+
+    #container {
+        position: relative;
+        display: inline-block;
+    }
+
+    #mainGif {
+        width: 1000px;
+        max-width: 95vw;
+        display: block;
+    }
+
+    /* Clickable number overlay */
+    #clickGrid {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: 70px;
+
+        display: grid;
+        grid-template-columns: repeat(48, 1fr);
+    }
+
+    .cell {
+        cursor: pointer;
+    }
+
+    .cell:hover {
+        background: rgba(255,255,255,0.15);
+    }
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+    <!-- Main displayed GIF -->
+    <img id="mainGif" src="1.gif">
+
+    <!-- Invisible clickable regions -->
+    <div id="clickGrid"></div>
+
+</div>
+
+<script>
+    const grid = document.getElementById("clickGrid");
+    const mainGif = document.getElementById("mainGif");
+
+    for (let i = 1; i <= 48; i++) {
+        const cell = document.createElement("div");
+
+        cell.className = "cell";
+
+        cell.addEventListener("click", () => {
+            mainGif.src = i + ".gif";
+        });
+
+        grid.appendChild(cell);
+    }
+</script>
+
+</body>
+</html>
