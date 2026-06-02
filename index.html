@@ -39,18 +39,6 @@
         grid-template-columns: repeat(49, 1fr);
     }
 
-    #modeIndicator {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        color: black;
-        font-size: 48px;
-        font-family: Arial, sans-serif;
-        user-select: none;
-        z-index: 9999;
-        pointer-events: none;
-    }
-
     .cell {
         cursor: pointer;
     }
@@ -64,8 +52,6 @@
 <body>
 
 <div id="container">
-
-    <div id="modeIndicator">▶</div>
 
     <img id="display" src="blank.png" alt="Default Display">
 
@@ -92,19 +78,13 @@
 
         current.replaceWith(img);
 
-        let playMode = true;
-
         document.addEventListener("keydown", (event) => {
             if (event.code === "Space") {
                 event.preventDefault();
-        
                 playMode = !playMode;
-        
-                document.getElementById("modeIndicator").textContent =
-                    playMode ? "▶" : "⏸";
             }
         });
-           
+        
     }
 
     function showVideo(num) {
