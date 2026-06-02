@@ -60,6 +60,8 @@
 </div>
 
 <script>
+    let playMode = true;
+    
     const grid = document.getElementById("clickGrid");
     const container = document.getElementById("container");
 
@@ -75,30 +77,48 @@
         img.style.display = "block";
 
         current.replaceWith(img);
+
+        document.addEventListener("keydown", (event) => {
+            if (event.code === "Space") {
+                event.preventDefault();
+                playMode = !playMode;
+            }
+        });
+        
     }
 
     function showVideo(num) {
         const current = document.getElementById("display");
-
+    
         const video = document.createElement("video");
         video.id = "display";
-        video.autoplay = true;
         video.muted = true;
-        video.loop = true;
         video.playsInline = true;
         video.style.width = "1000px";
         video.style.maxWidth = "95vw";
         video.style.display = "block";
-
+    
+        if (playMode) {
+            video.autoplay = true;
+            video.loop = true;
+        }
+    
         const source = document.createElement("source");
         source.src = num + "_5.webm";
         source.type = "video/webm";
-
+    
         video.appendChild(source);
-
+    
         current.replaceWith(video);
-
-        video.play();
+    
+        if (playMode) {
+            video.play();
+        } else {
+            video.addEventListener("loadeddata", () => {
+                video.pause();
+                video.currentTime = 0;
+            });
+        }
     }
 
     for (let i = 0; i <= 48; i++) {
