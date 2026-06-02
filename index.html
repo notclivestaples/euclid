@@ -21,7 +21,7 @@
         display: inline-block;
     }
 
-    #mainVideo {
+    #display {
         width: 1000px;
         max-width: 95vw;
         display: block;
@@ -36,7 +36,7 @@
         height: 70px;
 
         display: grid;
-        grid-template-columns: repeat(48, 1fr);
+        grid-template-columns: repeat(49, 1fr);
     }
 
     .cell {
@@ -53,14 +53,7 @@
 
 <div id="container">
 
-    <video
-        id="mainVideo"
-        autoplay
-        muted
-        loop
-        playsinline>
-        <source src="1_5.webm" type="video/webm">
-    </video>
+    <img id="display" src="blank.png" alt="Default Display">
 
     <div id="clickGrid"></div>
 
@@ -68,16 +61,56 @@
 
 <script>
     const grid = document.getElementById("clickGrid");
-    const video = document.getElementById("mainVideo");
+    const container = document.getElementById("container");
 
-    for (let i = 1; i <= 48; i++) {
+    function showBlank() {
+        const current = document.getElementById("display");
+
+        const img = document.createElement("img");
+        img.id = "display";
+        img.src = "blank.png";
+        img.alt = "Default Display";
+        img.style.width = "1000px";
+        img.style.maxWidth = "95vw";
+        img.style.display = "block";
+
+        current.replaceWith(img);
+    }
+
+    function showVideo(num) {
+        const current = document.getElementById("display");
+
+        const video = document.createElement("video");
+        video.id = "display";
+        video.autoplay = true;
+        video.muted = true;
+        video.loop = true;
+        video.playsInline = true;
+        video.style.width = "1000px";
+        video.style.maxWidth = "95vw";
+        video.style.display = "block";
+
+        const source = document.createElement("source");
+        source.src = num + "_5.webm";
+        source.type = "video/webm";
+
+        video.appendChild(source);
+
+        current.replaceWith(video);
+
+        video.play();
+    }
+
+    for (let i = 0; i <= 48; i++) {
         const cell = document.createElement("div");
         cell.className = "cell";
 
         cell.addEventListener("click", () => {
-            video.src = i + "_5.webm";
-            video.load();
-            video.play();
+            if (i === 0) {
+                showBlank();
+            } else {
+                showVideo(i);
+            }
         });
 
         grid.appendChild(cell);
